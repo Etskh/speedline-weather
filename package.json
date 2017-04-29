@@ -1,0 +1,22 @@
+{
+  "name": "speedline",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon -e html,js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bunyan": "^1.8.10",
+    "compression": "^1.6.2",
+    "express": "^4.15.2",
+    "lodash": "^4.17.4",
+    "nunjucks": "^3.0.0",
+    "request": "^2.81.0",
+    "xml2js": "^0.4.17"
+  }
+}
