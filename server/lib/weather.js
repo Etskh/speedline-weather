@@ -65,29 +65,30 @@ const getBCSiteList = () => {
         return translateSiteList(result.siteList.site);
     });
 };
-/*
-getBCSiteList().then( siteList => {
-    console.log('Got it!');
-    console.log(JSON.stringify(siteList, null, 2));
-}).catch( err => {
-    console.log('Error');
-    console.log(err);
-});*/
 
 
 // gets the weather for a given site
 const getWeatherForSite = (city, siteCode) => {
-    const url = ' http://dd.weather.gc.ca/citypage_weather/xml/BC/' + siteCode + '_e.xml';
+    const url = 'http://dd.weather.gc.ca/citypage_weather/xml/BC/' + siteCode + '_e.xml';
     return parseXmlFromUrl(url).then(result => {
         // Transform from their format to something more useful for us!
         const weather = result.siteData.currentConditions[0];
+
+        // take the longitude and latitude, but cut the last character which is the cardinal direction
+        // the cardinal direction will flip the sign of the number
+        var longitude = weather.station[0].$.lon;
+        var latitude = weather.station[0].$.lat;
+        //                     is it south?                            parse the number
+        latitude = (latitude[latitude.length-1]=='S'?-1:1) * parseFloat(latitude.slice(0, -1));
+        longitude = (longitude[longitude.length-1]=='W'?-1:1) * parseFloat(longitude.slice(0, -1));
+
         return {
-            city, city,
+            city: city,
             // don't need> siteCode: siteCode,
             condition: weather.condition[0],
             temperature: weather.temperature[0]._, // denotes text
-            longitude: weather.station[0].$.lon,
-            latitude: weather.station[0].$.lat,
+            latitude: latitude,
+            longitude: longitude,
         };
     });
 };
@@ -111,12 +112,7 @@ const getWeatherForCities = ( cities ) => {
         });
     });
 };
-/*
-getWeatherForCities(['Comox', 'Vancouver']).then( weather => {
-    console.log(JSON.stringify(weather, null, 2));
-}).catch( err => {
-    console.log(err);
-});
-*/
+
+
 
 module.exports.getForCities = getWeatherForCities;

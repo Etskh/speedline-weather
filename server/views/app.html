@@ -8,8 +8,8 @@
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        width: 300px;
-        height: 480px;
+        width: 480px;
+        height: 640px;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -17,22 +17,48 @@
         margin: 0;
         padding: 0;
       }
+      h1, h2, h3, h4, h5 {
+        text-align:center;
+      }
+      /* bump the h4 down a bit */
+      h4 {
+        padding-top: 14px;
+      }
+      .container {
+        position:relative;
+      }
+      #temperature:after {
+        content:'°';
+      }
+      #info {
+        width:100%;
+        display:none;
+        position:absolute;
+        margin:auto auto;
+      }
+      #map {
+        margin: auto auto;
+      }
     </style>
   </head>
   <body>
-    <div id="cities">{{ cities }}</div>
-    <div id="map"></div>
-    <script>
-      var map;
-      function initMap() {
-        // initialise map
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
-        });
-      }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{googleApi}}&callback=initMap"
-    async defer></script>
+    <div class="container">
+        <div id="info">
+            <div class="col-xs-6">
+                <h3 id="temperature"></h3>
+            </div>
+            <div class="col-xs-6">
+                <h4 id="condition"></h4>
+            </div>
+        </div>
+        <h2 id="cityName">Click the icons for more information</h2>
+        <div class="col-xs-12">
+            <div id="map"></div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maps.googleapis.com/maps/api/js?key={{googleApi}}"></script>
+    <script src="/weather-app.js"></script>
   </body>
 </html>
